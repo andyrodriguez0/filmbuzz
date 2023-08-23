@@ -6,8 +6,10 @@ export default function Search({ getPopular, handleSearch }) {
       </div>
       <div className="search-container">
         <input type='text' className="query"></input>
-        <button onClick={handleSearch}>Search</button>
-        <button onClick={getPopular}>Popular</button>
+        <div className="buttons">
+          <button onClick={handleSearch}>Search</button>
+          <button onClick={getPopular}>Popular</button>
+        </div>
       </div>
     </div>
   )

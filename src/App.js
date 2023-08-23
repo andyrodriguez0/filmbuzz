@@ -50,7 +50,6 @@ function App() {
   }
 
   async function handleSearch() {
-    setMovies([]);
     const query = document.querySelector('.query').value;
     const url = `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${query}&language=en-US&page=1`;
     const response = await fetch(url);
@@ -75,8 +74,8 @@ function App() {
         <ModalContent data={modal.data} handleClose={handleClose} />
       </Modal>
       <Search getPopular={getPopular} handleSearch={handleSearch} />
-      <Movies movies={movies} favorites={favorites} handleFavorite={handleFavorite} handleDetails={handleDetails} />
-      <Favorites movies={favorites} favorites={favorites} handleFavorite={handleFavorite} handleDetails={handleDetails} />
+      <Movies favorites={favorites} movies={movies} handleDetails={handleDetails} handleFavorite={handleFavorite} />
+      <Favorites favorites={favorites} movies={favorites} handleDetails={handleDetails} handleFavorite={handleFavorite} />
     </div>
   );
 }

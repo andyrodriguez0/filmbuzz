@@ -1,6 +1,6 @@
 import popcornImage from '../assets/images/popcorn.png';
 
-export default function Movie({ movie, favorites, handleDetails, handleFavorite }) {
+export default function Movie({ favorites, movie, handleDetails, handleFavorite }) {
   const date = new Date(movie.release_date);
   const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
@@ -14,12 +14,12 @@ export default function Movie({ movie, favorites, handleDetails, handleFavorite 
         <div className='buttons'>
           <span className='details' onClick={() => handleDetails(movie)}>&#183;&#183;&#183;</span>
           <span className='star' onClick={() => handleFavorite(movie)}>
-          {favorites.some(favorite=> favorite.id === movie.id) ? "★" : "☆"}
+            {favorites.some(favorite => favorite.id === movie.id) ? "★" : "☆"}
           </span>
         </div>
       </div>
       <img className='small-poster' src={movie.poster_path != null
-        ? 'https://image.tmdb.org/t/p/original/' + movie.poster_path
+        ? `https://image.tmdb.org/t/p/original/${movie.poster_path}`
         : popcornImage}></img>
     </div>
   )

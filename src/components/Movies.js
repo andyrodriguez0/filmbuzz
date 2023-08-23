@@ -1,17 +1,15 @@
 import Movie from "./Movie"
 
-export default function Movies({ movies, favorites, handleFavorite, handleDetails }) {
+export default function Movies({ favorites, movies, handleDetails, handleFavorite }) {
   return (
     <div className="movies">
       <div className='header'>
         <h1>Movies</h1>
       </div>
       <div className="movies-container">
-      {movies.map((movie, index) => {
-        return (
-          <Movie key={index} movie={movie} favorites={favorites} handleDetails={handleDetails} handleFavorite={handleFavorite} />
-        )
-      })}
+        {movies.map((movie, index) =>
+          <Movie key={index} favorites={favorites} movie={movie} handleDetails={handleDetails} handleFavorite={handleFavorite} />
+        )}
       </div>
     </div>
   )

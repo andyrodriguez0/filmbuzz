@@ -1,6 +1,6 @@
 # Filmbuzz
 
-Filmbuzz is a React-based application that allows you to discover, search, and favorite movies.
+Filmbuzz is a React-based application that allows you to discover, search, and favorite movies
 
 ## Running the Application
 
