@@ -1,14 +1,19 @@
 import popcornImage from '../assets/images/popcorn.png';
 
-export default function Movie({ movie, favorites, handleDetailsClick, handleFavoriteClick }) {
+export default function Movie({ movie, favorites, handleDetails, handleFavorite }) {
+  const date = new Date(movie.release_date);
+  const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
   return (
     <div className='movie'>
-      <div>
-        <h3>{movie.title}</h3>
-        <h4>{movie.release_date}</h4>
+      <div className='movie-details'>
+        <h4>{movie.title}</h4>
+        <h5>{date != 'Invalid Date'
+        ? `${months[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`
+        : 'No Release Date'}</h5>
         <div className='buttons'>
-          <span className='details' onClick={() => handleDetailsClick(movie)}>Details</span>
-          <span className='star' onClick={() => handleFavoriteClick(movie)}>
+          <span className='details' onClick={() => handleDetails(movie)}>&#183;&#183;&#183;</span>
+          <span className='star' onClick={() => handleFavorite(movie)}>
           {favorites.some(favorite=> favorite.id === movie.id) ? "★" : "☆"}
           </span>
         </div>
