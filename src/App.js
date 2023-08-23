@@ -31,11 +31,11 @@ function App() {
 
   function handleFavorite(movie) {
     let newFavorites;
-    if (!favorites.includes(movie)) {
+    if (!favorites.some(element => element.id === movie.id)) {
         newFavorites = favorites.slice();
         newFavorites.push(movie);
     } else {
-      newFavorites = favorites.filter(element => element != movie);
+      newFavorites = favorites.filter(element => element.id != movie.id);
     }
     setFavorites(newFavorites);
     localStorage.setItem('favorites', JSON.stringify(newFavorites));
@@ -50,6 +50,7 @@ function App() {
   }
 
   async function handleSearch() {
+    setMovies([]);
     const query = document.querySelector('.query').value;
     const url = `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${query}&language=en-US&page=1`;
     const response = await fetch(url);

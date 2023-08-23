@@ -14,7 +14,9 @@ export default function ModalContent({ data, handleClose }) {
         ? `Release Date: ${months[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`
         : 'No Release Date'}</h4>
       <h4>{data.overview}</h4>
-      <h4>Rating: {data.vote_average}</h4>
+      <h4>{data.vote_count > 0
+        ? `Rating: ${data.vote_average}`
+        : 'No Ratings'}</h4>
       <button onClick={handleClose}>Close</button>
     </div>
   )
