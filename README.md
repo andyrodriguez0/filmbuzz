@@ -8,7 +8,7 @@ Follow the steps below to get Filmbuzz running on your machine:
 
 1. Install [Node.js](https://nodejs.org/en)
 2. Clone this GitHub repository into a local directory of your choice
-3. From the filmbuzz project directory, run `npm install` to install the project dependencies then run `npm start`
+3. From the filmbuzz project directory, run `npm install` then `npm start`
 4. Open [http://localhost:3000](http://localhost:3000) to view Filmbuzz in your browser
 
 That's it!
