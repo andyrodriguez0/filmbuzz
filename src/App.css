@@ -116,6 +116,10 @@ button {
   cursor: pointer;
 }
 
+.error {
+  padding: 10px;
+}
+
 /* -------------------------------- MOBILE ---------------------------------- */
 
 @media (max-width: 750px) {
