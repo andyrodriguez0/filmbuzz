@@ -1,0 +1,11 @@
+### Create a new favorite
+POST http://localhost:3001/favorites/create
+content-type: application/json
+
+{ "movieId": 2, "releaseDate": "02-09-1999", "posterImage": "claudia", "description": "very good", "averageRating": "9.5" }
+
+### Get favorites
+GET http://localhost:3001/favorites
+
+### Delete a favorite
+POST http://localhost:3001/favorites/delete/2
