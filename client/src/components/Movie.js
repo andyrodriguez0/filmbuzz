@@ -18,7 +18,7 @@ export default function Movie({ favorites, movie, handleDetails, handleFavorite 
           </span>
         </div>
       </div>
-      <img className='small-poster' src={movie.poster_path != null
+      <img className='small-poster' src={movie.poster_path !== null
         ? `https://image.tmdb.org/t/p/original/${movie.poster_path}`
         : popcornImage}></img>
     </div>

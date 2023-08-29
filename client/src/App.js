@@ -10,7 +10,6 @@ import Search from './components/Search';
 Modal.setAppElement('#root');
 
 function App() {
-  const apiKey = '855a13a8bd82d244b0f38aad5fea55ca';
   const defaultModal = {show: false, data: {poster_path: null, title: null, release_date: null, overview: null, vote_average: null}};
 
   const [error, setError] = useState(false);
@@ -19,11 +18,10 @@ function App() {
   const [movies, setMovies] = useState([]);
   
   async function getPopular() {
-    const url = `https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}&language=en-US&page=1`;
-    const response = await fetch(url);
+    const response = await fetch('http://localhost:3001/movies/popular');
     if (response.ok) {
       const data = await response.json();
-      setMovies(data['results']);
+      setMovies(data);
     } else {
       setError(true);
     }
@@ -35,7 +33,7 @@ function App() {
         newFavorites = favorites.slice();
         newFavorites.push(movie);
     } else {
-      newFavorites = favorites.filter(element => element.id != movie.id);
+      newFavorites = favorites.filter(element => element.id !== movie.id);
     }
     setFavorites(newFavorites);
     localStorage.setItem('favorites', JSON.stringify(newFavorites));
@@ -51,11 +49,11 @@ function App() {
 
   async function handleSearch() {
     const query = document.querySelector('.query').value;
-    const url = `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${query}&language=en-US&page=1`;
+    const url = `http://localhost:3001/movies/search?query=${query}`;
     const response = await fetch(url);
     if (response.ok) {
       const data = await response.json();
-      setMovies(data['results']);
+      setMovies(data);
       document.querySelector('.query').value = '';
     } else {
       setError(true);

@@ -1,0 +1,5 @@
+### Get popular movies
+GET http://localhost:3001/movies/popular
+
+### Get search results
+GET http://localhost:3001/movies/search?query=shrek
