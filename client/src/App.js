@@ -13,7 +13,7 @@ function App() {
   const defaultModal = {show: false, data: {poster_path: null, title: null, release_date: null, overview: null, vote_average: null}, news: []};
 
   const [error, setError] = useState(false);
-  const [favorites, setFavorites] = useState(localStorage.getItem("favorites") ? JSON.parse(localStorage.getItem("favorites")) : []);
+  const [favorites, setFavorites] = useState([]);
   const [modal, setModal] = useState(defaultModal);
   const [movies, setMovies] = useState([]);
   
@@ -27,16 +27,24 @@ function App() {
     }
   };
 
-  function handleFavorite(movie) {
-    let newFavorites;
-    if (!favorites.some(element => element.id === movie.id)) {
-        newFavorites = favorites.slice();
-        newFavorites.push(movie);
+  async function getFavorites() {
+    const response = await fetch('http://localhost:3001/favorites');
+    if (response.ok) {
+      const data = await response.json();
+      setFavorites(data);
     } else {
-      newFavorites = favorites.filter(element => element.id !== movie.id);
+      setError(true);
     }
-    setFavorites(newFavorites);
-    localStorage.setItem('favorites', JSON.stringify(newFavorites));
+  }
+
+  async function handleFavorite(movie) {
+    if (favorites.some(element => element.movieId === movie.movieId)) {
+      await fetch(`http://localhost:3001/favorites/delete/${movie.movieId}`, {method: 'POST'});
+    } else {
+      const options = {method: 'POST', headers: {"Content-Type": "application/json"}, body: JSON.stringify(movie)}
+      await fetch('http://localhost:3001/favorites/create', options);
+    }
+    getFavorites();
   };
 
   async function handleDetails(movie) {
@@ -63,6 +71,7 @@ function App() {
 
   useEffect(() => {
     getPopular();
+    getFavorites();
   }, [])
 
   if (error) {return <Error />}

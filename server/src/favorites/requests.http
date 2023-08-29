@@ -8,4 +8,4 @@ content-type: application/json
 GET http://localhost:3001/favorites
 
 ### Delete a favorite
-POST http://localhost:3001/favorites/delete/2
+POST http://localhost:3001/favorites/delete/976573

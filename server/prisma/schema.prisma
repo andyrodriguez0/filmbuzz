@@ -9,9 +9,10 @@ datasource db {
 
 model favorites {
   id            Int       @default(autoincrement()) @id
-  movieId       Int?
+  title         String?   @db.VarChar
+  movieId       Int?      @unique
   releaseDate   String?   @db.VarChar
   posterImage   String?   @db.VarChar
   description   String?   @db.VarChar
-  averageRating String?   @db.VarChar
+  averageRating Float?    
 }

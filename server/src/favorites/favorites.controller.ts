@@ -6,7 +6,7 @@ export class FavoritesController {
   constructor(private favoritesService: FavoritesService) {};
 
   @Post('/create')
-  createFavorite(@Body() data: { movieId: number, releaseDate: string, posterImage: string, description: string, averageRating: string }) {
+  createFavorite(@Body() data: { movieId: number, releaseDate: string, posterImage: string, description: string, averageRating: number }) {
     return this.favoritesService.createFavorite(data);
   }
 

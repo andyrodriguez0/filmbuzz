@@ -14,7 +14,7 @@ export class FavoritesService {
     return this.prisma.favorites.findMany({});
   }
 
-  async deleteFavorite(id: number) {
-    return this.prisma.favorites.delete({where: {id}});
+  async deleteFavorite(movieId: number) {
+    return this.prisma.favorites.deleteMany({where: {movieId}});
   }
 }
