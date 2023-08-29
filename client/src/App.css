@@ -41,8 +41,11 @@
 
 .modal {
   text-align: center;
-  max-width: 500px;
   margin: auto;
+  display: grid;
+  grid-template-columns: repeat(2, 50%);
+  gap: 10px;
+  grid-auto-rows: minmax(100px, auto);
 }
 
 .film {
@@ -130,5 +133,9 @@ button {
   
   .search, .search-container {
     flex-direction: column;
+  }
+
+  .modal {
+    grid-template-columns: 100%;
   }
 }

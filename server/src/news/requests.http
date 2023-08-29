@@ -1,0 +1,2 @@
+### Get movie news
+GET http://localhost:3001/news/about-movie/shrek

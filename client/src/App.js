@@ -10,7 +10,7 @@ import Search from './components/Search';
 Modal.setAppElement('#root');
 
 function App() {
-  const defaultModal = {show: false, data: {poster_path: null, title: null, release_date: null, overview: null, vote_average: null}};
+  const defaultModal = {show: false, data: {poster_path: null, title: null, release_date: null, overview: null, vote_average: null}, news: []};
 
   const [error, setError] = useState(false);
   const [favorites, setFavorites] = useState(localStorage.getItem("favorites") ? JSON.parse(localStorage.getItem("favorites")) : []);
@@ -39,8 +39,10 @@ function App() {
     localStorage.setItem('favorites', JSON.stringify(newFavorites));
   };
 
-  function handleDetails(movie) {
-      setModal({show: true, data: movie});
+  async function handleDetails(movie) {
+    const response = await fetch(`http://localhost:3001/news/about-movie/${movie.title}`);
+    const data = await response.json();
+    setModal({show: true, data: movie, news: data});
   }
 
   function handleClose() {
@@ -49,8 +51,7 @@ function App() {
 
   async function handleSearch() {
     const query = document.querySelector('.query').value;
-    const url = `http://localhost:3001/movies/search?query=${query}`;
-    const response = await fetch(url);
+    const response = await fetch(`http://localhost:3001/movies/search?query=${query}`);
     if (response.ok) {
       const data = await response.json();
       setMovies(data);
@@ -69,7 +70,7 @@ function App() {
   return (
     <div className="App">
       <Modal isOpen={modal.show}>
-        <ModalContent data={modal.data} handleClose={handleClose} />
+        <ModalContent data={modal.data} news={modal.news} handleClose={handleClose} />
       </Modal>
       <Search getPopular={getPopular} handleSearch={handleSearch} />
       <Movies favorites={favorites} movies={movies} handleDetails={handleDetails} handleFavorite={handleFavorite} />
