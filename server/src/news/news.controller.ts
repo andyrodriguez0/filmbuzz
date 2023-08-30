@@ -6,7 +6,7 @@ export class NewsController {
   constructor(private newsService: NewsService) {}
 
   @Get('/about-movie/:movieName')
-  getMovieNews(@Param('movieName') movieName: string) {
-    return this.newsService.getMovieNews(movieName);
+  getNews(@Param('movieName') movieName: string) {
+    return this.newsService.getNews(movieName);
   }
 }
