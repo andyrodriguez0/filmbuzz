@@ -2,10 +2,10 @@
 POST http://localhost:3001/favorites/create
 content-type: application/json
 
-{ "movieId": 2, "releaseDate": "02-09-1999", "posterImage": "claudia", "description": "very good", "averageRating": "9.5" }
+{ "title": "test", "movieId": 999, "releaseDate": "12-19-1996", "posterImage": "test", "description": "test", "averageRating": 4.4 }
 
 ### Get favorites
 GET http://localhost:3001/favorites
 
 ### Delete a favorite
-POST http://localhost:3001/favorites/delete/976573
+POST http://localhost:3001/favorites/delete/999
