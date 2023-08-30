@@ -14,7 +14,7 @@ export default function ModalContent({ data, news, handleClose }) {
             ? `https://image.tmdb.org/t/p/original/${data.posterImage}`
             : popcornImage}></img>
           <h3>{data.title}</h3>
-          <h4>{date !== 'Invalid Date'
+          <h4>{JSON.stringify(date) !== 'null'
             ? `Release Date: ${months[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`
             : 'No Release Date'}</h4>
           <h4>{`Rating: ${data.averageRating}`}</h4>
