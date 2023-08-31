@@ -1,6 +1,9 @@
 import { IsNumber, IsString } from "class-validator";
 
 export class FavoriteDto {
+  @IsString()
+  title: string;
+
   @IsNumber()
   movieId: number;
 
