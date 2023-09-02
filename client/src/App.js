@@ -10,39 +10,47 @@ import Search from './components/Search';
 Modal.setAppElement('#root');
 
 function App() {
-  const apiKey = '855a13a8bd82d244b0f38aad5fea55ca';
-  const defaultModal = {show: false, data: {poster_path: null, title: null, release_date: null, overview: null, vote_average: null}};
+  const defaultModal = {show: false, data: {poster_path: null, title: null, release_date: null, overview: null, vote_average: null}, news: []};
 
   const [error, setError] = useState(false);
-  const [favorites, setFavorites] = useState(localStorage.getItem("favorites") ? JSON.parse(localStorage.getItem("favorites")) : []);
+  const [favorites, setFavorites] = useState([]);
   const [modal, setModal] = useState(defaultModal);
   const [movies, setMovies] = useState([]);
   
   async function getPopular() {
-    const url = `https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}&language=en-US&page=1`;
-    const response = await fetch(url);
+    const response = await fetch('http://localhost:3001/movies/popular');
     if (response.ok) {
       const data = await response.json();
-      setMovies(data['results']);
+      setMovies(data);
     } else {
       setError(true);
     }
   };
 
-  function handleFavorite(movie) {
-    let newFavorites;
-    if (!favorites.some(element => element.id === movie.id)) {
-        newFavorites = favorites.slice();
-        newFavorites.push(movie);
+  async function getFavorites() {
+    const response = await fetch('http://localhost:3001/favorites');
+    if (response.ok) {
+      const data = await response.json();
+      setFavorites(data);
     } else {
-      newFavorites = favorites.filter(element => element.id != movie.id);
+      setError(true);
     }
-    setFavorites(newFavorites);
-    localStorage.setItem('favorites', JSON.stringify(newFavorites));
+  }
+
+  async function handleFavorite(movie) {
+    if (favorites.some(element => element.movieId === movie.movieId)) {
+      await fetch(`http://localhost:3001/favorites/delete/${movie.movieId}`, {method: 'POST'});
+    } else {
+      const options = {method: 'POST', headers: {"Content-Type": "application/json"}, body: JSON.stringify(movie)}
+      await fetch('http://localhost:3001/favorites/create', options);
+    }
+    getFavorites();
   };
 
-  function handleDetails(movie) {
-      setModal({show: true, data: movie});
+  async function handleDetails(movie) {
+    const response = await fetch(`http://localhost:3001/news/about-movie/${movie.title}`);
+    const data = await response.json();
+    setModal({show: true, data: movie, news: data});
   }
 
   function handleClose() {
@@ -51,11 +59,10 @@ function App() {
 
   async function handleSearch() {
     const query = document.querySelector('.query').value;
-    const url = `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${query}&language=en-US&page=1`;
-    const response = await fetch(url);
+    const response = await fetch(`http://localhost:3001/movies/search?query=${query}`);
     if (response.ok) {
       const data = await response.json();
-      setMovies(data['results']);
+      setMovies(data);
       document.querySelector('.query').value = '';
     } else {
       setError(true);
@@ -64,6 +71,7 @@ function App() {
 
   useEffect(() => {
     getPopular();
+    getFavorites();
   }, [])
 
   if (error) {return <Error />}
@@ -71,7 +79,7 @@ function App() {
   return (
     <div className="App">
       <Modal isOpen={modal.show}>
-        <ModalContent data={modal.data} handleClose={handleClose} />
+        <ModalContent data={modal.data} news={modal.news} handleClose={handleClose} />
       </Modal>
       <Search getPopular={getPopular} handleSearch={handleSearch} />
       <Movies favorites={favorites} movies={movies} handleDetails={handleDetails} handleFavorite={handleFavorite} />

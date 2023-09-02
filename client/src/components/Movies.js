@@ -8,7 +8,7 @@ export default function Movies({ favorites, movies, handleDetails, handleFavorit
       </div>
       <div className="movies-container">
         {movies.map((movie, _) =>
-          <Movie key={movie.id} favorites={favorites} movie={movie} handleDetails={handleDetails} handleFavorite={handleFavorite} />
+          <Movie key={movie.movieId} favorites={favorites} movie={movie} handleDetails={handleDetails} handleFavorite={handleFavorite} />
         )}
       </div>
     </div>
